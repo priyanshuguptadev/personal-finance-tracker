@@ -4,10 +4,61 @@ import { asyncHandler } from "../utils/asyncHandler";
 
 export const getAllTransactions = asyncHandler(
   async (req: Request, res: Response) => {
-    const transactions = await Transaction.find().sort({ date: -1 });
-    res.json({
+    const { category, type, sortOrder = "desc" } = req.query;
+    const filter: any = {};
+
+    switch (category as string) {
+      case "Food & Dining":
+      case "Transportation":
+      case "Shopping":
+      case "Entertainment":
+      case "Bills & Utilities":
+      case "Healthcare":
+      case "Education":
+      case "Travel":
+      case "Income":
+      case "Investment":
+      case "Other":
+        filter.category = category;
+        break;
+      default:
+        break;
+    }
+
+    switch (type as string) {
+      case "income":
+        filter.amount = { $gte: 0 };
+        break;
+      case "expense":
+        filter.amount = { $lt: 0 };
+        break;
+      default:
+        break;
+    }
+
+    let sortDirection: 1 | -1;
+    switch (sortOrder as string) {
+      case "asc":
+        sortDirection = 1;
+        break;
+      case "desc":
+      default:
+        sortDirection = -1;
+        break;
+    }
+
+    const transactions = await Transaction.find(filter)
+      .sort({ date: sortDirection })
+      .lean();
+
+    res.send({
       success: true,
-      data: transactions,
+      transactions: transactions,
+      filters: {
+        category: category || null,
+        type: type || null,
+        sortOrder: sortDirection === 1 ? "asc" : "desc",
+      },
     });
   }
 );

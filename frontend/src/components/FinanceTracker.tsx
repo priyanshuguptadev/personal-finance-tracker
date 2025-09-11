@@ -124,12 +124,12 @@ const FinanceTracker = () => {
 
       <div className="flex-1 p-8">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Overview</h1>
+          <h1 className="text-3xl font-bold">Home</h1>
           <button
-            className="bg-green-500 hover:bg-green-600 text-black font-medium py-2 px-4 rounded-lg transition-colors flex items-center"
+            className="bg-green-500 hover:bg-green-600 text-black font-medium p-2 md:py-2 md:px-4 md:rounded-full transition-colors flex items-center rounded-lg"
             onClick={() => setIsModelOpen(true)}
           >
-            <Plus className="w-4 h-4 mr-2" />
+            <Plus className="w-4 h-4 md:mr-2" />
             <span className="hidden md:block">Add Transaction</span>
           </button>
         </div>

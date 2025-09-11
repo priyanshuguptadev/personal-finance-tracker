@@ -90,8 +90,8 @@ export default function TransactionsDisplay({
           <h2 className="text-xl font-semibold mb-6 text-white">
             Recent Transactions
           </h2>
-          <div className="grid grid-cols-4 md:grid-cols-5 gap-4 text-slate-400 text-sm mb-4">
-            <div>Date</div>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-slate-400 text-sm mb-4">
+            <div className="hidden md:block">Date</div>
             <div>Description</div>
             <div className="hidden md:block">Category</div>
             <div className="text-right">Amount</div>
@@ -106,9 +106,9 @@ export default function TransactionsDisplay({
               {transactions.map((transaction) => (
                 <div
                   key={transaction.id}
-                  className="grid grid-cols-4 md:grid-cols-5 gap-4 items-center py-3 border-b border-slate-700 hover:bg-slate-700/30 transition-colors"
+                  className="grid grid-cols-2 md:grid-cols-5 gap-4 items-center py-3 border-b border-slate-700 hover:bg-slate-700/30 transition-colors"
                 >
-                  <div className="text-slate-300">
+                  <div className="text-slate-300 hidden md:block">
                     {new Date(transaction.date).toLocaleDateString("en-IN")}
                   </div>
                   <div className="text-white">{transaction.title}</div>
@@ -130,7 +130,7 @@ export default function TransactionsDisplay({
                   >
                     {formatAmount(transaction.amount)}
                   </div>
-                  <div className="flex justify-center space-x-2">
+                  <div className="hidden md:flex justify-center space-x-2">
                     <button
                       className="p-1 rounded hover:bg-slate-600 transition-colors"
                       title="Edit Transaction"

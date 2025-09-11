@@ -73,7 +73,7 @@ export default function TransactionCard({
           maximumFractionDigits: 2,
         })}
       </div>
-      <div className="flex justify-center space-x-2">
+      <div className="hidden: md:flex justify-center space-x-2">
         <button
           onClick={handleEdit}
           className="p-1 rounded hover:bg-slate-600 transition-colors"

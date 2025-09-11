@@ -95,7 +95,7 @@ export default function TransactionsDisplay({
             <div>Description</div>
             <div className="hidden md:block">Category</div>
             <div className="text-right">Amount</div>
-            <div className="text-center">Actions</div>
+            <div className="hidden md:block text-center">Actions</div>
           </div>
           {transactions.length === 0 ? (
             <div className="text-center py-8">

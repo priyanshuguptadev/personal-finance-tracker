@@ -155,7 +155,7 @@ const EditTransactionModal: React.FC<EditTransactionModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
-        className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
+        className="absolute inset-0 bg-opacity-50 backdrop-blur-sm"
         onClick={handleClose}
       />
       <div className="relative bg-slate-800 rounded-xl p-8 w-full max-w-2xl mx-4 shadow-2xl border border-slate-700">

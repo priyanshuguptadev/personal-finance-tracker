@@ -51,9 +51,31 @@ export const getAllTransactions = asyncHandler(
       .sort({ date: sortDirection })
       .lean();
 
+    const stats = await Transaction.aggregate([
+      { $match: filter },
+      {
+        $group: {
+          _id: null,
+          totalIncome: {
+            $sum: {
+              $cond: [{ $gte: ["$amount", 0] }, "$amount", 0],
+            },
+          },
+          totalExpenses: {
+            $sum: {
+              $cond: [{ $lt: ["$amount", 0] }, { $abs: "$amount" }, 0],
+            },
+          },
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+    const summary = stats[0] || { totalIncome: 0, totalExpenses: 0, count: 0 };
+
     res.send({
       success: true,
       transactions: transactions,
+      summary: summary,
       filters: {
         category: category || null,
         type: type || null,
@@ -81,25 +103,25 @@ export const getTransaction = asyncHandler(
   }
 );
 
-export const createTransaction = asyncHandler(
-  async (req: Request, res: Response) => {
-    const { title, amount, date, category } = req.body;
+export const createTransaction = async (req: Request, res: Response) => {
+  console.log(req.body);
 
-    const transaction = new Transaction({
-      title,
-      amount,
-      date: new Date(date),
-      category,
-    });
+  const { title, amount, date, category } = req.body;
 
-    const savedTransaction = await transaction.save();
+  const transaction = new Transaction({
+    title,
+    amount,
+    date: new Date(date),
+    category,
+  });
 
-    res.status(201).json({
-      success: true,
-      data: savedTransaction,
-    });
-  }
-);
+  const savedTransaction = await transaction.save();
+
+  res.status(201).json({
+    success: true,
+    data: savedTransaction,
+  });
+};
 
 export const updateTransaction = asyncHandler(
   async (req: Request, res: Response) => {

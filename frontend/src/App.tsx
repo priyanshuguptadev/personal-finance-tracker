@@ -1,5 +1,7 @@
+import FinanceTracker from "./components/FinanceTracker";
+
 function App() {
-  return <div>hey</div>;
+  return <FinanceTracker />;
 }
 
 export default App;
